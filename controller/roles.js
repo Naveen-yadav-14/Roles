@@ -1,6 +1,17 @@
 
 
 module.exports ={
+    renderLogin: async (req, res) => {
+        try {
+          return res.render("index", {
+            success: req.flash("success"),
+            error: req.flash("error"),
+          });
+        } catch (error) {
+          console.log("error", error);
+          return res.redirect("/auth/login");
+        }
+      },
     login: async (req, res) => {
         try {
           const email = req.body.email;
@@ -32,7 +43,7 @@ module.exports ={
             if (err) {
               return next(err);
             }
-            return res.redirect("/admin/v1/dashboard");
+            return res.redirect("/admin/dashboard");
           });
         } catch (error) {
           console.log(error);
@@ -40,4 +51,15 @@ module.exports ={
           return res.redirect("/auth/login");
         }
       },
+
+      dashboard : async (req,res)=>{
+        try{
+            return res.render("dashboard")
+
+        }catch(err){
+            console.log(err.message)
+            return res.redirect("/auth/login")
+        }
+
+      }
 }
