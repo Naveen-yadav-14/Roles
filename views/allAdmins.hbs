@@ -1,0 +1,170 @@
+{{>headers}}
+<title>All Admins</title>
+<div class="row p-2" style="margin: 0px !important;">
+    <div class="col-md-12">
+        <div class="card mt-2">
+            <div class="alert-success">{{success}}</div>
+            <div class="alert-danger">{{error}}</div>
+            <div class="card-header">
+                <h4><b style="font-weight:bolder; color:  white !important ">All Admins</b></h4>
+            </div>
+            <div class="card-body p-2">
+                <div id="example1_wrapper">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ol class="float-sm-right">
+                                <button href="" id="" data-bs-toggle="modal" data-bs-target="#addModal"
+                                    style="background-color: #4A3AFF; color:white; border:none; border-radius:5px; width: 180px; height: 40px; "><i
+                                        class="fa-solid fa-plus"></i> Add Admin</button>
+                            </ol>
+                        </div>
+                        <div class="col-sm-12 table-responsive">
+                            <table id="example2" aria-describedby="example1_info">
+                                <thead>
+                                    <tr>
+                                        <th class="sorting" tabindex="0" aria-controls="example1">S.No</th>
+                                        {{!-- <th class="sorting" tabindex="0" aria-controls="example1">Name</th> --}}
+                                        <th class="sorting" tabindex="0" aria-controls="example1">Email</th>
+                                        {{!-- <th class="sorting" tabindex="0" aria-controls="example1">Mobile</th> --}}
+                                        {{#if (includes userPermissions "admins.singladmin")}}
+                                        <th class="sorting" tabindex="0" aria-controls="example1">Action</th>
+                                        {{/if}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each allAdmins}}
+                                    <tr class="odd">
+                                        <td>{{inc @index}}</td>
+                                        {{!-- <td>{{this.fullName}}</td> --}}
+                                        <td>{{this.email}}</td>
+                                        {{!-- <td>{{this.phoneNumber}}</td> --}}
+                                        <td style="display: flex; gap:12px">
+                                            <div class="eye">
+                                                <a href="/admin/singleadmin/{{this._id}}"
+                                                    class="btn btn-sm btn-secondary">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </div>
+                                            {{!-- <div class="eye">
+                                                <a href="javascript:void(0);" data-bs-toggle="modal"
+                                                    data-id="{{this._id}}" data-bs-target="#deleteModal"
+                                                    class="btn btn-sm btn-danger">
+                                                    <i class="fa-solid fa-trash "></i>
+                                                </a>
+                                            </div> --}}
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color: black; font-weight: bold; font-size: 40px;">Add Admin</h5>
+            </div>
+            <form action="/admin/addadmin" id="addAdminForm" enctype="application/x-www-form-urlencoded" method="post"  onsubmit="changeButtonState()">
+                <div class="modal-body">
+                    {{!-- <label for="name"> Name</label>
+                    <input type="text" class="form-control" name="name" required  placeholder="Enter Name" minlength="3"
+                        maxlength="50"  pattern="^[A-Za-z]+(?: [A-Za-z]+)*$" title="Only alphabets are allowed, no numbers, no special characters, no leading/trailing spaces, and only one space between words."> --}}
+                    <label for="name">Email</label>
+                   <input type="email" class="form-control" name="email" required placeholder="Enter Email" 
+                    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                    title="Enter a valid email address like user@example.com">
+                    {{!-- <label for="phone">Mobile</label>
+                    <div class="input-group">
+                        <input type="text" id="mobile" class="form-control" name="mobile" 
+                            required pattern="^[6-9]\d{9}$" 
+                            placeholder="Mobile Number" 
+                            title="Enter a valid 10-digit mobile number starting with 6, 7, 8, or 9.">
+                    </div> --}}
+                    <label for="password">Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" name="password" required
+                            placeholder="Enter Password"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{8,14}$"
+                            title="Password must be 8-14 characters, with at least one uppercase letter, one lowercase letter, one number, and one special character. No spaces allowed."
+                        >
+                        <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
+                            <i class="fa fa-eye" id="toggleEye"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="addBtn"
+                        style="background-color: #4A3AFF; color:white">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color: black; font-weight: 480;">Are you sure you want to delete this?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="/superadmin/deleteuser/{{this._id}}" type="button" class="btn btn-danger"> yes </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        if (!$.fn.DataTable.isDataTable('#example2')) {
+            $('#example2').addClass('table table-bordered table-striped').DataTable({
+                "paging": true,
+                "dom": 'Bfrtip',
+                "buttons": [
+                    'copy', 'csv', 'excel', 'print', 'colvis'
+                ]
+            });
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var projectId = button.data('id');
+            var modal = $(this);
+            modal.find('a.btn-danger').attr('href', '/superadmin/deleteuser/' + projectId);
+        });
+    });
+</script>
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var toggleIcon = document.getElementById("toggleEye");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+
+     function changeButtonState() {
+    var submitButton = document.getElementById('addBtn');
+    submitButton.textContent = 'Adding...';
+    submitButton.disabled = true;
+  }
+</script>
+{{>footer}}
+
+</html>
