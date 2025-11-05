@@ -1,4 +1,4 @@
-const permissions = require("./models/permissionsModel");
+const permissions = require("../models/permissionsModel");
 
 module.exports = {
     allPermissions: async (req, res) => {
