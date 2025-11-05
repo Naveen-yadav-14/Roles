@@ -4,7 +4,7 @@ const hbs = require("hbs");
 const expressSession = require("express-session");
 const connectDB = require("./config/connection")
 const flash = require('connect-flash');
-const userRouter = require("./userRouter");
+const userRouter = require("./router/userRouter");
 const mongoDBSession = require("connect-mongodb-session")(expressSession);
 const dotenv = require("dotenv").config();
 const roleRoute = require("./router/index")
@@ -49,6 +49,7 @@ app.use(expressSession({
 // Template Engine
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
+app.use(express.static(path.join(__dirname, "public")));
 app.engine("html", hbs.__express);
 
 
