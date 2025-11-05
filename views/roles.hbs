@@ -1,0 +1,250 @@
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Simple-DataTables -->
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3" defer></script>
+
+<!-- Flowbite -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js" defer></script>
+
+<!--Pdf -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+
+<style>
+    .datatable-input {
+        border: 1px solid gray;
+        border-radius: 12px;
+        padding: 0.5rem;
+    }
+
+    .datatable-input:focus-visible {
+        outline: 2px solid #16a34a;
+    }
+
+    .datatable-selector {
+        border: 1px solid gray;
+        border-radius: 5px;
+    }
+
+    .datatable-selector:focus-visible {
+        outline: none;
+    }
+
+    .datatable-table>thead {
+        background-color: #d0e9da;
+    }
+</style>
+{{>headers}}
+
+<div class="bg-white rounded-lg border border-gray-300 p-6 w-full max-w-full mx-auto">
+    <div class="overflow-x-auto">
+        <div class="flex justify-between items-center">
+            <h1 class="text-green-600 text-xl font-semibold"></h1>
+            <button type="button" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                class="focus:outline-none text-white bg-green-700 mt-3 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create Role</button>
+        </div>
+        <div class="relative mt-6">
+            <button id="exportButton"
+                class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100">
+                Export As
+                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+            <div id="exportMenu"
+                class="absolute z-10 hidden mt-2 w-40 bg-white border border-gray-200 rounded-md shadow-md">
+                <button id="btnExportCSV" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export
+                    CSV</button>
+                <button id="btnExportJSON" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export
+                    JSON</button>
+                <button id="btnExportTXT" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export
+                    TXT</button>
+                <button id="btnExportSQL" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export
+                    SQL</button>
+                <button id="btnExportPDF" class="w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Export
+                    Pdf</button>
+            </div>
+        </div>
+        <table id="export-table" class="min-w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-green-50 text-gray-600 text-sm">
+                    <th class="py-3 px-4 font-medium">PAGE NAME</th>
+                    <th class="py-3 px-4 font-medium">PAGE VIEWS</th>
+                    <th class="py-3 px-4 font-medium">PAGE VALUE</th>
+                    <th class="py-3 px-4 font-medium">BOUNCE RATE</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                <tr>
+                    <td class="py-3 px-4"></td>
+                    <td class="py-3 px-4"></td>
+                    <td class="py-3 px-4"></td>
+                    <td class="py-3 px-4 text-green-600 font-medium"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Main modal -->
+<div id="authentication-modal" tabindex="-1" aria-hidden="true"
+    class="hidden max-w-full w-full overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <div
+                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                <h3 class="text-xl font-semibold text-green-800">
+                    Create Role
+                </h3>
+                <button type="button"
+                    class="end-2.5 text-gray-400 bg-transparent  hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="authentication-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div class="p-4 md:p-5">
+                <form class="space-y-4" action="/admin/createrole" method="post" enctype="multipart/form-data">
+                    <div>
+                        <label for="file" class="block mb-2 text-sm font-medium text-green-800">New
+                            Role Name</label>
+                        <input type="text" name="roleName" id="role"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                             />
+                          {{#each Permissions}}
+                                <label>
+                        <input type="checkbox" name="permissionName" value="{{this._id}}">
+                                {{this.name}}
+                                 </label><br>
+                            {{/each}}
+
+                    </div>
+                    <button type="submit"
+                        class="w-full text-white bg-green-800  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">AddBanner</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const table = new simpleDatatables.DataTable("#export-table", {
+            perPage: 10,
+            perPageSelect: [5, 10, 15, 20],
+            searchable: true,
+            sortable: true,
+        });
+
+        // Add Tailwind gray dividers after init
+        table.on('datatable.init', () => {
+            const tbody = document.querySelector('#export-table tbody');
+            if (tbody) {
+                tbody.classList.add('divide-y', 'divide-gray-200');
+            }
+        });
+
+        // Export button logic (same as before)
+        const exportButton = document.getElementById("exportButton");
+        const exportMenu = document.getElementById("exportMenu");
+
+        exportButton.addEventListener("click", () => {
+            exportMenu.classList.toggle("hidden");
+        });
+
+        function exportCustomCSV(dataTable, options = {}) {
+            options = Object.assign({
+                download: true,
+                lineDelimiter: "\n",
+                columnDelimiter: ";"
+            }, options);
+
+            const csv = simpleDatatables.exportCSV(dataTable, { download: false, columnDelimiter: options.columnDelimiter });
+            if (!csv) return;
+
+            const visibleColumns = dataTable.data.headings.filter((_, idx) => !dataTable.columns.settings[idx]?.hidden);
+            const separatorRow = visibleColumns.map(() => "+").join("+");
+            const finalCSV = `${separatorRow}${options.lineDelimiter}${csv}${options.lineDelimiter}${separatorRow}`;
+
+            if (options.download) {
+                const link = document.createElement("a");
+                link.href = "data:text/csv;charset=utf-8," + encodeURIComponent(finalCSV);
+                link.download = (options.filename || "datatable_export") + ".txt";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            return finalCSV;
+        }
+
+        // Export event bindings
+        document.getElementById("btnExportCSV").addEventListener("click", () => {
+            exportCustomCSV(table);
+            exportMenu.classList.add("hidden");
+        });
+
+        document.getElementById("btnExportJSON").addEventListener("click", () => {
+            simpleDatatables.exportJSON(table, { download: true, space: 2 });
+            exportMenu.classList.add("hidden");
+        });
+
+        document.getElementById("btnExportTXT").addEventListener("click", () => {
+            simpleDatatables.exportTXT(table, { download: true });
+            exportMenu.classList.add("hidden");
+        });
+
+        document.getElementById("btnExportSQL").addEventListener("click", () => {
+            simpleDatatables.exportSQL(table, { download: true, tableName: "export_table" });
+            exportMenu.classList.add("hidden");
+        });
+
+        document.getElementById("btnExportPDF").addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const headers = [];
+            document.querySelectorAll("#export-table thead th").forEach(th => {
+                headers.push(th.textContent.trim());
+            });
+
+            const rows = [];
+            document.querySelectorAll("#export-table tbody tr").forEach(tr => {
+                const row = [];
+                tr.querySelectorAll("td").forEach(td => {
+                    row.push(td.textContent.trim());
+                });
+                rows.push(row);
+            });
+
+            doc.autoTable({
+                head: [headers],
+                body: rows,
+                styles: { fontSize: 9 },
+                headStyles: { fillColor: [34, 197, 94] }, // Tailwind green-500
+                margin: { top: 20 },
+                theme: 'grid'
+            });
+
+            // Save file
+            doc.save("export_table.pdf");
+
+            // Hide menu
+            document.getElementById("exportMenu").classList.add("hidden");
+        });
+
+    });
+</script>
+
+
+{{>footer}}

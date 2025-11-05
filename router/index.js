@@ -1,13 +1,13 @@
 const roleRoute = require("express").Router()
 
 
-const rolesController = require("../controller/roles")
+const authController = require("../controller/authController")
 
 
 
 
-roleRoute.get("/login",rolesController.renderLogin)
-roleRoute.post("/login",rolesController.login)
+roleRoute.get("/login",authController.renderLogin)
+roleRoute.post("/login",authController.login)
 
 
 

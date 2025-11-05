@@ -1,10 +1,27 @@
 const roles = require("../models/rolesModel");
+const permissions = require("../models/permissionsModel")
 
 module.exports = {
+
+
+    renderingRoles:async (req,res)=>{
+        try{
+            const Permissions = await permissions.find()
+            return res.render("roles",{
+                Permissions 
+            })
+        }catch(err){
+          console.log(err.message)
+          return res.redirect("/admin/dashboard")
+
+        }
+    },
     addRole: async (req, res) => {
         try {
-            const { roleName, permissions } = req.body;
-            await roles.create({ roleName, permissions });
+            const { roleName,value } = req.body;
+            console.log(roleName,value)
+            
+            // await roles.create({ roleName, permissions });
             req.flash("success", "Permission added successfully");
             return res.redirect("/admin/allpermissions");
         } catch (error) {

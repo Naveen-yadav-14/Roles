@@ -1,8 +1,12 @@
 const adminRoute = require("express").Router()
-const rolesController = require("../controller/roles")
+const authController = require("../controller/authController")
+
+const roleController = require("../controller/roleController")
 
 
-adminRoute.get("/dashboard",rolesController.dashboard)
+adminRoute.get("/dashboard",authController.dashboard)
+
+adminRoute.get("/allroles",roleController.renderingRoles)
 
 
 module.exports = adminRoute
