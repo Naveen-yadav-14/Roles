@@ -1,10 +1,15 @@
 const adminRoute = require("express").Router()
+const authController = require("../controller/authController")
+
+const roleController = require("../controller/roleController")
 const rolesController = require("../controller/roles")
 const permissionsController = require("../controller/permissionsController")
 const userController = require("../controller/userController")
 
 
-adminRoute.get("/dashboard",rolesController.dashboard)
+adminRoute.get("/dashboard",authController.dashboard)
+
+adminRoute.get("/allroles",roleController.renderingRoles)
 adminRoute.get("/allPermissions", permissionsController.allPermissions)
 adminRoute.get("/allusers", userController.allUsers);
 adminRoute.post("/addpermission", permissionsController.addPermission);

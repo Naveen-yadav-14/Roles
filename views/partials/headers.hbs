@@ -390,7 +390,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="/admin/v1/dashboard" class="nav-link">
+                            <a href="/admin/dashboard" class="nav-link">
                                 <i style="margin-left: 5px; color: green" class="fa fa-pie-chart"
                                     aria-hidden="true"></i>
                                 <p style="margin-left: 5px; color: green; font-family: 'Lato'">Dashboard</p>
@@ -402,179 +402,15 @@
                                 <p style="margin-left: 16px; color: green; font-family: 'Lato'">Banners</p>
                             </a>
                         </li>
-                        {{!-- <li class="nav-item">
-                            <a class="nav-link" href="/admin/v1/kyc">
-                                <i style="margin-left: 5px; color: green" ; class="fas fa-id-card"></i>
-                                <p style="margin-left: 16px; color: green; font-family: 'Lato'">KYC</p>
+                         <li class="nav-item">
+                            <a class="nav-link" href="/admin/allroles">
+                                <i style="margin-left: 5px; color: green" ; class="fas fa-film"></i>
+                                <p style="margin-left: 16px; color: green; font-family: 'Lato'">Roles</p>
                             </a>
-                        </li> --}}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/v1/kyctabs">
-                                <i style="margin-left: 5px; color: green" ; class="fas fa-spinner"></i>
-                                <p style="margin-left: 16px; color: green; font-family: 'Lato'">KYC Progress</p>
-                            </a>
-                        </li>
-                        <li class="nav-item has-treeview" id="bookingManagementMenu">
-                            <a href="#" class="nav-link" style="display: flex;gap:10px; align-items:center">
-                                <i class="nav-icon fas fa-users-cog"></i>
-                                <p>
-                                    User Management
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/allusers">
-                                        <i style="margin-left: 5px; color: green" ; class="fa-solid fa-users"></i>
-                                        <p style="margin-left: 12px; color: green; font-family: 'Lato'">All Users</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview" id="bookingManagementMenu">
-                            <a href="#" class="nav-link" style="display: flex; gap:10px; align-items:center;">
-                                <i class="nav-icon fa fa-american-sign-language-interpreting"></i>
-                                <p>
-                                    Rental
-                                    <i class="right fas fa-angle-left" style="margin-left: 20px;"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/lends">
-                                        <i style="margin-left: 5px; color: green" ; class="fa fa-arrow-right"></i>
-                                        <p style="margin-left: 10px; color: green; font-family: 'Lato'">Lends</p>
-                                        {{!-- <p style="margin-left: 5px; color: green; font-family: 'Lato'">Dashboard
-                                        </p> --}}
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/needforrent">
-                                        <i style="margin-left: 5px; color: green" ; class="fa fa-arrow-left"></i>
-                                        <p style="margin-left: 16px; color: green; font-family: 'Lato'">Rent
-                                        </p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview" id="bookingManagementMenu">
-                            <a href="#" class="nav-link" style="display: flex;gap:10px; align-items:center;">
-                                <i class="nav-icon fa fa-key"></i>
-                                <p>
-                                    Exchange
-                                    <i class="right fas fa-angle-left " style="margin-left:90px"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/postexchange">
-                                    
-                                        <i style="margin-left: 5px; color: green" class="fa fa-exchange"></i>
-                                        <p style="margin-left: 15px; color: green; font-family: 'Lato'">Exchanges
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/requestexchange">
-                                       <i   style="margin-left: 5px; color: green" class="fa-duotone fa-solid fa-hand"></i>
-                                        <p style="margin-left: 15px; color: green; font-family: 'Lato'">Request Exchanges
-                                        </p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link" style="display: flex;gap:10px; align-items:center;">
-                                <i class="nav-icon fa fa-briefcase"></i>
-                                <p>
-                                    Services
-                                    <i class="right fas fa-angle-left" style="margin-left:10px"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/getservice">
-                                        <i class="fa fa-reply" style="color: green;"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">Get Services</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/giveservice">
-                                        <i style="margin-left: 5px; color: green" ;  class="nav-icon fa fa-share"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">Give services
-                                        </p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview" id="bookingManagementMenu">
-                            <a href="#" class="nav-link" style="display: flex;gap:10px; align-items:center;">
-                                <i class="nav-icon fa fa-bell"></i>
-                                <p>
-                                    Subscriptions
-                                    <i class="right fas fa-angle-left" style="margin-left:10px"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="nav-icon fa fa-flickr" style="color: green;"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">View
-                                            Subscriptions</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/subscriptions">
-                                        <i style="margin-left: 5px; color: green" ; class="fa fa-pencil"></i>
-                                        <p style="margin-left: 15px; color: green; font-family: 'Lato'">Manage
-                                            Subscription
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1">
-                                        <i class="fa-solid fa-credit-card" style="margin-left: 5px; color: green"></i>
-                                        <p style="margin-left: 10px; color: green; font-family: 'Lato'">Payments</p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview" id="bookingManagementMenu">
-                            <a href="#" class="nav-link" style="display: flex;gap:10px; align-items:center;">
-                                <i class="nav-icon fa fa-cog"></i>
-                                <p>
-                                    Settings
-                                    <i class="right fas fa-angle-left" style="margin-left:10px"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/policies">
-                                        <i class="nav-icon fa fa-file-text" style="color: green;"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">Policies</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/contact_support">
-                                        <i class="fa-solid fa-headset" style="color: green;"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">Contact & Support</p>
-                                    </a>
-                                </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link" href="/admin/v1/tickets">
-                                        <i class="fa-duotone fa-solid fa-ticket" style="color: green;"></i>
-                                        <p style="margin-left: 9px; color: green; font-family: 'Lato'">Tickets</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
-                    </ul>
+                       
+                      </ul>
                 </nav>
             </div>
         </aside>
