@@ -2,7 +2,7 @@ const adminRoute = require("express").Router()
 const authController = require("../controller/authController")
 
 const roleController = require("../controller/roleController")
-const rolesController = require("../controller/roles")
+// const rolesController = require("../controller/roles")
 const permissionsController = require("../controller/permissionsController")
 const userController = require("../controller/userController")
 
