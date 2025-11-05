@@ -25,9 +25,9 @@ const corsOptions = {
     optionsSuccessStatus: 204
 };
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(flash());
-app.use(express.urlencoded({ extended: true }));
 
 const store = new mongoDBSession({
     uri: process.env.MONGO_URI,

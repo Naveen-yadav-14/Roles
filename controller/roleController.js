@@ -2,33 +2,40 @@ const roles = require("../models/rolesModel");
 const permissions = require("../models/permissionsModel")
 
 module.exports = {
-
-
     renderingRoles:async (req,res)=>{
         try{
+            const roless = await roles.find().populate({path:"permissions",select:"name-_id"}).lean()
+            console.log(roless,"kk")
             const Permissions = await permissions.find()
             return res.render("roles",{
-                Permissions 
+                Permissions
             })
         }catch(err){
           console.log(err.message)
           return res.redirect("/admin/dashboard")
-
         }
     },
-    addRole: async (req, res) => {
+    addRole: async (req,res) => {
         try {
-            const { roleName,value } = req.body;
-            console.log(roleName,value)
-            
-            // await roles.create({ roleName, permissions });
-            req.flash("success", "Permission added successfully");
-            return res.redirect("/admin/allpermissions");
+          console.log(req.body);
+          const { roleName, permissionName } = req.body;
+          console.log(permissionName)
+          const permissionsArray = Array.isArray(permissionName)
+          ? permissionName
+          : [permissionName];
+          await roles.create({
+            roleName:roleName,
+            permissions:permissionsArray
+          })
+      
+          req.flash("success", "Permission added successfully");
+          return res.redirect("/admin/allroles")
         } catch (error) {
-            console.error('Error occurred:', error.message);
-            return res.render('/admin/dashboard');
+          console.error("Error occurred:", error.message);
+          return res.status(500).json({ success: false, message: "Server Error" });
         }
-    },
+      },
+      
     allRoles: async (req, res) => {
         try {
             const allRoles = await roles.find().sort({ createdAt: -1 })
