@@ -1,4 +1,5 @@
-
+const user = require("../models/userModel")
+const bcrypt = require("bcryptjs")
 
 module.exports ={
     renderLogin: async (req, res) => {
@@ -21,18 +22,18 @@ module.exports ={
             req.flash("error", "Invalid fields");
             return res.redirect("/auth/login");
           }
-          const adminExists = await admin.findOne({ email });
-          if (!adminExists) {
+          const userExists = await user.findOne({ email });
+          if (!userExists) {
             req.flash("error", "You dont have admin accessss");
             return res.redirect("/auth/login");
           }
-          if (adminExists.status === "Inactive") {
+          if (userExists.status === "Inactive") {
             req.flash("error", "Your account is freezed");
             return res.redirect("/auth/login");
           }
           const matchedPassword = await bcrypt.compare(
             password,
-            adminExists.password
+            userExists.password
           );
           if (!matchedPassword) {
             req.flash("error", "Password is wrong");

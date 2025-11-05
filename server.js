@@ -43,6 +43,8 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.engine("html", hbs.__express);
 
+hbs.registerPartials(path.join(__dirname, "views", "partials"));
+
 app.get("/", async (req, res) => {
     return res.redirect("/auth/login");
 });
