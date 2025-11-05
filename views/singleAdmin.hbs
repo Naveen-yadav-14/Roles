@@ -1,0 +1,558 @@
+<style>
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+{{>headers}}
+<title>Admin Profile</title>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row pb-2 pr-2 pl-2">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline mt-3">
+                    <div class="card-header" style="background-color: #4A3AFF; color:white;">
+                        <h4><b style="color: white !important">{{vendorExists.name}}'s Profile</b></h4>
+                    </div>
+                </div>
+            </div>
+            {{!-- <div class="col-sm-12">
+                <ol class="float-sm-right">
+                    <a href="/superadmin/allocations/{{vendorExists._id}}"
+                        style="background-color: #4A3AFF; color:white; border:none; border-radius:5px; width: 180px; height: 40px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+                        <i class="fa-solid fa-plus"></i>Allocate Product</a>
+                </ol>
+            </div> --}}
+            {{!-- <div class="col-md-3 ">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="img-fluid" src="{{vendorExists.profilePicture}}" alt="Profile picture"
+                                onerror="this.onerror=null;this.src='/admin/images/dummy.png'">
+                        </div><br>
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>First Name</b>
+                                <p class="float-right">
+                                    <b>{{vendorExists.name}}</b>
+                                </p>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Email</b>
+                                <p class="float-right text-truncate"
+                                    style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    <b>{{vendorExists.email}}</b>
+                                </p>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Joined At</b>
+                                <p class="float-right">
+                                    <b>{{DateTime vendorExists.createdAt}}</b>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div> --}}
+            <div class="col-md-12">
+                <div class="alert-success">{{success}}</div>
+                <div class="alert-danger">{{error}}</div>
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#arts" data-toggle="tab">Details</a>
+                            </li>
+                            <li class="nav-item"><a class="nav-link" href="#winners" data-toggle="tab">Batches</a>
+                            </li>
+                            {{!-- <li class="nav-item"><a class="nav-link" href="#joinedUsers"
+                                    data-toggle="tab">Withdraws</a>
+                            </li> --}}
+                        </ul>
+                    </div><!-- /.card-header -->
+                    
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="arts">
+                                <div class="row">
+                                     <div class="col-md-3 ">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <p style="text-align: center; color:black !important">Profile Picture</p>
+                        <div class="text-center">
+                            <img class="img-fluid" src="{{vendorExists.profilePicture}}" alt="Profile picture"
+                                onerror="this.onerror=null;this.src='/admin/images/dummy.png'">
+                        </div><br>
+                    </div>
+                </div>
+            </div>
+                                    <div class="col-md-9">
+                                        <form id="updateUserForm" action="/superadmin/updatevendor/{{vendorExists._id}}"
+                                            method="post" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>Name</label>
+                                                        <input type="text" class="form-control" name="name"
+                                                            value="{{vendorExists.name}}" minlength="3" maxlength="50">
+                                                    <p id="nameP" style="color:red !important;"></p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Email</label>
+                                                        <input type="text" class="form-control" name="email"
+                                                            value="{{vendorExists.email}}"
+                                                            oninput="this.value = this.value.toLowerCase()">
+                                                    <p id="emailP" style="color: red !important;"></p>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label>Change Password</label>
+                                                        <div class="input-group">
+                                                            <input type="password" class="form-control" id="password"
+                                                                name="password" placeholder="Enter Password">
+                                                            <button type="button" class="btn btn-outline-secondary"
+                                                                onclick="togglePassword()">
+                                                                <i class="fa fa-eye" id="toggleEye"></i>
+                                                            </button>
+                                                        </div>
+                                                            <p id="passwordP" style="color:red !important;"></p>
+                                                    </div>
+                                                     <div class="col-md-4">
+                                                        <label>Address</label>
+                                                        <textarea name="address" class="form-control" rows="1"
+                                                            id="" minlength="3" maxlength="100">{{vendorExists.address}}</textarea>
+                                                    <p id="addressP" style="color:red !important;"></p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="profile">Profile Picture</label>
+                                                        <input type="file" id="picture" class="modal-file" accept="image/*" name="picture">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="long">Shop Name</label>
+                                                        <input type="text" minlength="3" class="form-control" value="{{vendorExists.shop}}" name="shop" placeholder="Enter Shop Name" >
+                                                    <p id="shopP" style="color:red !important;"></p>
+                                                    </div>
+                                                    {{!-- <div class="col-md-4">
+                                                        <label for="status">Status</label>
+                                                        <select name="status" id="" class="form-control">
+                                                            <option value="Active">Active</option>
+                                                            <option value="Inactive">Inactive</option>
+                                                        </select>
+                                                    </div> --}}
+                                                    <div class="col-md-4">
+                                                        <label>subscription Access</label>
+                                                        <select name="status" class="form-control">
+                                                            <option value="Active" {{#if (eql
+                                                                vendorExists.status "Active"
+                                                                )}}selected{{/if}}>
+                                                                Active</option>
+                                                            <option value="Inactive" {{#if (eql
+                                                                vendorExists.status "Inactive"
+                                                                )}}selected{{/if}}>
+                                                                Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                {{!-- <div class="row">
+                                                     
+                                                     
+
+                                                     
+                                                     <div class="col-md-4">
+                                                        <label>Latitude</label>
+                                                        <input type="text" minlength="3" maxlength="20" class="form-control" name="latitude"
+                                                            value="{{vendorExists.latitude}}">
+                                                    <p id="latitudeP" style="color:red !important;"></p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>Longitude</label>
+                                                        <input type="text" minlength="3" maxlength="20" class="form-control" name="longitude"
+                                                            value="{{vendorExists.longitude}}">
+                                                    <p id="longitudeP" style="color:red !important;"></p>
+                                                    </div> 
+                                                </div> --}}
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" id="modeel"
+                                                disabled class="saveButton btn btn-primary col-md-4 offset-md-4 btn-block d-flex justify-content-center">Update</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="winners">
+                                {{#if (eql recentBatch.status "Active")}}
+                                <div class="col-sm-12">
+                                    <ol class="float-sm-right">
+                                        <button href="" id="" data-bs-toggle="modal" data-bs-target="#addModal"
+                                            style="background-color: #4A3AFF; color:white; border:none; border-radius:5px; width: 180px; height: 40px; "><i
+                                                class="fa-solid fa-plus"></i> Add Batch</button>
+                                    </ol>
+                                </div>
+                                {{/if}}
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>S No</th>
+                                                <th>Name</th>
+                                                <th>Original Price</th>
+                                                <th>Discounted Price</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="test">
+                                            {{#each vendorBatches}}
+                                            <tr>
+                                                <td>{{inc @index}}</td>
+                                                <td>{{this.name}}</td>
+                                                <td>{{this.originalPrice}}</td>
+                                                <td>{{this.discountedPrice}}</td>
+                                                <td>{{this.status}}</td>
+                                                <td>
+                                                    <div class="eye">
+                                                        <a href="/superadmin/allocations/{{this._id}}"
+                                                            class="btn btn-sm btn-secondary">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {{!-- <div class="tab-pane" id="joinedUsers">
+                                <div class="table-responsive">
+                                    <table id="example11" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>S No</th>
+                                                <th>Bank Name</th>
+                                                <th>Account Number</th>
+                                                <th>IFSC Code</th>
+                                                <th>Requested Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="test">
+                                            {{#each allWithDraws}}
+                                            <tr>
+                                                <td>{{inc @index}}</td>
+                                                <td>{{this.bankName}}</td>
+                                                <td>{{this.accountNumber}}</td>
+                                                <td>{{this.ifscCode}}</td>
+                                                <td>{{this.requestingAmont}}</td>
+                                                <td>{{this.status}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="color: black; font-weight: 480;">Are you sure you want to create a batch?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                <a href="/superadmin/addbatch/{{vendorExists._id}}" type="button" class="btn btn-secondary"> yes </a>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+
+  <script>
+    const addModalForm = document.getElementById('updateUserForm')
+    const passwordP = document.getElementById('passwordP')
+    const emailP = document.getElementById('emailP')
+    const nameP = document.getElementById('nameP')
+    const addressP = document.getElementById('addressP')
+    const shopP = document.getElementById('shopP')
+    //const latitudeP = document.getElementById('latitudeP')
+    //const longitudeP = document.getElementById('longitudeP')
+    const submitBtn = document.getElementById('submitBtn')
+    const pictureInput = document.getElementById('picture')
+ 
+    let isNameCorrect
+    let isEmailCorrect
+    let isAddressCorrect
+    //let isLatitudeCorrect
+    //let islongitudeCorrect
+    let isPasswordCorrect
+    let isShopNameCorrect
+
+
+
+    const nameInput = addModalForm.elements.name
+    const emailInput = addModalForm.elements.email
+    const addressInput = addModalForm.elements.address
+    //const latitudeInput = addModalForm.elements.latitude
+    //const longitudeInput = addModalForm.elements.longitude
+    const passwordInput = addModalForm.elements.password
+    const shopInput = addModalForm.elements.shop
+
+//image validations
+    function fileValidation(element){
+    element.addEventListener("change", function () {
+    const file = this.files[0];
+    if (file) {
+    const validTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+    
+    if (!validTypes.includes(file.type)) {
+      alert("Only image format is acceptable.");
+      this.value = ""; // Clear the file input
+    } else {
+      console.log("✅ Valid image selected:", file.name);
+    }
+  }
+});
+}
+    
+    fileValidation(pictureInput)
+
+addModalForm.addEventListener('input',()=>{
+const name = addModalForm.elements.name.value.trimStart()
+    const nameRegex = /^[A-Za-z]{3,50}( [A-Za-z]{3,50})*$/
+    const nameStrength = nameRegex.test(name)
+    addModalForm.elements.name.value = name.replaceAll(/[!@#<>,.?\;:'"\/$%.\^&*()\-=+\[\]0-9]/g,"")
+    if(!nameStrength){
+        nameP.innerHTML = "Username should be 3 to 50 characters cannot inculde special characters and spaces in start or end."
+        isNameCorrect = false
+    }else{
+        isNameCorrect= true
+        nameP.innerHTML = ""
+    }
+
+
+    const email = addModalForm.elements.email.value.trim();
+
+// Improved regex for valid email structure
+const emailRegex = /^[A-Za-z0-9]+([._%+-]?[A-Za-z0-9]+)*@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/;
+const emailStrength = emailRegex.test(email);
+
+// List of allowed domains (including subdomains and new TLDs)
+const allowedDomains = [
+    '.com', '.net', '.org', '.edu', '.gov', '.mil', '.int', '.co', '.io', 
+    '.us', '.uk', '.ca', '.in', '.au', '.de', '.jp', '.cn', '.ru', '.br',
+    '.tech', '.biz', '.info', '.xyz', '.online', '.store', '.ai', '.app', '.dev',
+    '.health', '.law', '.news', '.music', '.bank', '.design', '.photography', 
+    '.media', '.finance', '.marketing', '.consulting', '.solutions', '.digital',
+    '.agency', '.ventures', '.guru', '.expert', '.club'
+];
+
+// Extract domain and TLD
+const domain = email.split('@')[1];
+let isDomainValid = false;
+
+if (domain) {
+    // Find the last occurrence of a dot to extract the TLD
+    const lastDotIndex = domain.lastIndexOf('.');
+    if (lastDotIndex !== -1) {
+        const topLevelDomain = domain.slice(lastDotIndex); // Extracts the ".com" part
+        isDomainValid = allowedDomains.includes(topLevelDomain);
+    }
+}
+
+// Final validation
+if (!emailStrength || !isDomainValid) {
+    emailP.innerHTML = "Incorrect Email. Please enter a valid email with a standard domain.";
+    isEmailCorrect = false;
+} else {
+    isEmailCorrect = true;
+    addModalForm.elements.email.value = email;
+    emailP.innerHTML = "";
+}
+
+   const address = addModalForm.elements.address.value.trimStart()
+    const addressRegex = /^[A-Za-z0-9][A-Za-z0-9.,\/#-]*([ ][A-Za-z0-9.,\/#-]+)*$/
+    const addressStrength = addressRegex.test(address)
+    if (!addressStrength) {
+        addressP.innerHTML = "Incorrect Address Details. No special characters or spaces at the end are allowed."
+        isAddressCorrect = false
+    }else{
+        isAddressCorrect = true
+        addModalForm.elements.address.value = address
+        addressP.innerHTML  = ""
+    }
+
+
+      /*const latitude = addModalForm.elements.latitude.value.trimStart()
+    const latitudeRegex = /^([-+]?([1-8]?\d(\.\d+)?|90(\.0+)?))$/
+    const latitudeStrength = latitudeRegex.test(latitude)
+    if (!latitudeStrength) {
+        addModalForm.elements.latitude.value = latitude.replaceAll(/[^0-9\.\-\+]/g, "")
+        isLatitudeCorrect = false
+    }else{
+        isLatitudeCorrect = true
+        addModalForm.elements.latitude.value = latitude
+    }
+
+    const longitude = addModalForm.elements.longitude.value.trimStart()
+    const longitudeRegex = /^([-+]?([1-8]?\d(\.\d+)?|90(\.0+)?))$/
+    const longitudeStrength = longitudeRegex.test(longitude)
+    if (!longitudeStrength) {
+        addModalForm.elements.longitude.value = longitude.replaceAll(/[^0-9\.\-\+]/g, "")
+        islongitudeCorrect = false
+    }else{
+        islongitudeCorrect = true
+        addModalForm.elements.longitude.value = longitude
+    }*/
+
+     const password = addModalForm.elements.password.value.trim()
+    const passwordStrength = password.length >= 8 && password.length < 15 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /\d/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password) 
+    if(passwordInput.value && !passwordStrength){
+        passwordP.innerHTML =  "Password can onlyl 8-14 characters long eg:(Example@123)"
+        isPasswordCorrect = false
+    }else{
+        isPasswordCorrect= true
+        addModalForm.elements.password.value = password
+        passwordP.innerHTML = ""
+    }
+
+    const shop = addModalForm.elements.shop.value.trim()
+        const shopRegex = /^[a-zA-Z\s]+$/
+        const shopNameStrength = shopRegex.test(shop)
+    if(!shopNameStrength){
+        shopP.innerHTML = "Shop name cannot include symbols and numbers."
+        isShopNameCorrect = false
+    }else{
+        isShopNameCorrect= true
+        shopP.innerHTML = ""
+    }
+})
+
+const form = document.getElementById("updateUserForm");
+const updateBtn = document.getElementById("modeel");
+const initialFormData = new FormData(form);
+
+// Handle file input changes explicitly
+pictureInput.addEventListener("change", () => {
+    form.dispatchEvent(new Event("input"));
+});
+
+form.addEventListener("input", () => {
+    const currentFormData = new FormData(form);
+    let isChanged = false;
+
+    for (let [key, value] of currentFormData.entries()) {
+        if (key === 'picture') continue; // Skip file field in comparison
+        if (value !== initialFormData.get(key)) {
+            isChanged = true;
+            break;
+        }
+    }
+
+    // Also count file selection as change
+    if (pictureInput.files.length > 0) {
+        isChanged = true;
+    }
+
+    // Final logic for enabling/disabling
+    if (
+        isEmailCorrect &&
+        (passwordInput.value ? isPasswordCorrect : true) &&
+        isNameCorrect &&
+        isAddressCorrect &&
+        isShopNameCorrect &&
+        isChanged
+    ) {
+        updateBtn.disabled = false;
+    } else {
+        updateBtn.disabled = true;
+    }
+});
+</script>
+{{!-- table 2 --}}
+<script>
+    $(document).ready(function () {
+        // Initialize DataTable with Buttons for the first table
+        if (!$.fn.DataTable.isDataTable('#example2')) {
+            $('#example2').DataTable({
+                "paging": true,
+                "responsive": true,
+                "ordering": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "bPaginate": true,
+                "bInfo": false,
+                "searching": true,
+                "pageLength": 10,
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    },
+                    'colvis'
+                ]
+            });
+        }
+    });
+</script>
+{{!-- reloading functionality --}}
+<script>
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+</script>
+{{>superAdminFooter}}
+{{!-- switches --}}
+<script>
+    $(document).ready(function () {
+        $("input[data-bootstrap-switch]").each(function () {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+        $('.status').bootstrapSwitch('state');
+    });
+</script>
+<script>
+    $("input[data-bootstrap-switch]").each(function () {
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    });
+</script>
+{{!-- password toggle --}}
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var toggleIcon = document.getElementById("toggleEye");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+</script>
+
+</html>

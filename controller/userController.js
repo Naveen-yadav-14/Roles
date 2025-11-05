@@ -5,12 +5,12 @@ const user = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-   signUp: async(req, res) => {
+   create: async(req, res) => {
     try {
         const {name, password} = req.body;
         // const hashedPassword = await bcrypt.hash(password, 10);
-        await accountent.create({name});
-        return res.status(200).json({message: "Sign up successfull"})
+        await frontDesk.create({name});
+        return res.status(200).json({message: "Created successfull"})
     } catch (error) {
         console.error('Error occurred:', error.message);
         return res.status(500).json({ message: 'Internal server error' });
