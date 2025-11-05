@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- FontAwesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="/admin/images/favicon.ico" type="image/x-icon">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/admin/images/BGZIPCK.png') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            /* backdrop-filter: blur(8px); */
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            padding: 50px;
+            width: 560px;
+
+            box-sizing: border-box;
+            text-align: center;
+
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            position: relative;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        .form-group input {
+            width: 95%;
+            height: 45px;
+            padding: 0px 20px 0px 12px;
+            border: 1px solid #ddd;
+            background-color: #E8F0FE;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #03AAD6;
+            box-shadow: 0 0 6px rgba(245, 124, 0, 0.4);
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 0px;
+            top: 70%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 42px;
+            background: #00c8ff;
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-button:hover {
+            background: #00abda;
+        }
+
+        .forgot-password {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .forgot-password a {
+            color: #333;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toast Notification */
+        .toast {
+            visibility: hidden;
+            max-width: 50%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 18px;
+            position: fixed;
+            z-index: 10;
+            right: 10px;
+            top: 30px;
+            font-size: 15px;
+            transform: translateX(-50%);
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {
+                right: 0;
+                opacity: 0;
+            }
+
+            to {
+                right: 10px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                right: 10px;
+                opacity: 1;
+            }
+
+            to {
+                right: 0;
+                opacity: 0;
+            }
+        }
+
+        .toast-success {
+            background-color: rgb(13, 223, 13);
+        }
+
+        .toast-error {
+            background-color: red;
+        }
+
+        .captcha-box {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Admin Panel</h2>
+        <h3>Sign In</h3>
+        <p>Sign in to stay connected.</p>
+
+        <form action="/auth/login" method="POST">
+            <div class="form-group">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="email" value="{{username}}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required value="{{password}}">
+            </div>
+
+            <div class="options">
+                <label><input type="checkbox" name="remember"> Remember me?</label>
+                <a href="/auth/forgotpassword">Forgot Password</a>
+            </div>
+
+
+            <div class="captcha-box" style="margin-left: 2%;">
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
+            </div>
+            {{!-- test key generate own test key from google cloud console and render it and hide the key while
+            rendering --}}
+            <button type="submit" class="login-button">Sign in</button>
+        </form>
+    </div>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+
+    <div id="toast" class="toast"></div>
+</body>
+
+<script>
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const toggleIcon = document.getElementById('togglePassword');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+            toggleIcon.title = 'Hide Password';
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+            toggleIcon.title = 'Show Password';
+        }
+    }
+
+    // Toast function
+    function showToast(message, type) {
+        const toast = document.getElementById('toast');
+        toast.className = 'toast show ' + (type === 'success' ? 'toast-success' : 'toast-error');
+        toast.textContent = message;
+        setTimeout(() => toast.className = toast.className.replace('show', ''), 3000);
+    }
+
+    // Simulate backend messages
+    const error = '{{error}}';
+    const success = '{{success}}';
+    if (error) showToast(error, 'error');
+    else if (success) showToast(success, 'success');
+</script>
