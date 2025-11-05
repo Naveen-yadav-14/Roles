@@ -6,5 +6,5 @@ const pharmacySchema = new mongoose.Schema({
 }, { timestamps: true }
 );
 
-const accountent = mongoose.model("pharmacy", pharmacySchema);
-module.exports = accountent;
+const pharmacy = mongoose.model("pharmacy", pharmacySchema);
+module.exports = pharmacy;

@@ -10,6 +10,7 @@ const dotenv = require("dotenv").config();
 const roleRoute = require("./router/index")
 const adminRoute = require("./router/admin")
 const cors = require("cors");
+const registerHelpers = require("./helpers");
 
 
 const app = express()
@@ -17,7 +18,7 @@ connectDB()
 
 
 
-
+registerHelpers();
 const corsOptions = {
     origin: "*",
     methods: "GET, POST, PUT, HEAD, PATCH, DELETE",
