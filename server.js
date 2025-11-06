@@ -11,6 +11,7 @@ const roleRoute = require("./router/index")
 const adminRoute = require("./router/admin")
 const cors = require("cors");
 const registerHelpers = require("./helpers");
+const setUserPermissions = require("./middleware/userPermission");
 
 
 const app = express()
@@ -45,7 +46,7 @@ app.use(expressSession({
     store: store,
 }));
 
-
+app.use(setUserPermissions);
 
 // Template Engine
 app.set("views", path.join(__dirname, "views"));

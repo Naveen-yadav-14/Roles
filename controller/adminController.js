@@ -40,12 +40,21 @@ module.exports = {
             req.flash("error","id is undefind")
             return res.redirect("/admin/dashboard")
           }
-            const {status} = req.body
-            if(!status){
-              req.flash("error","status is undefind")
-              return res.redirect("status is undefind")
+            const {status, password} = req.body
+            const userExits = await user.findById(id);
+            if(!userExits){
+              req.flash("error", "user not found");
+              return res.redirect("/admin/dashboard");
             }
-           await user.findByIdAndUpdate({_id:id},{$set:{role:status}})
+            const hashedPassword = await bcrypt.hash(password, 10);
+            userExits.role = status || userExits.role;
+            userExits.password = hashedPassword || userExits.password;
+            userExits.save();
+          //   if(!status){
+          //     req.flash("error","status is undefind")
+          //     return res.redirect("status is undefind")
+          //   }
+          //  await user.findByIdAndUpdate({_id:id},{$set:{role:status}})
            return res.redirect("/admin/allusers")
         }catch(err){
           console.log(err.message)

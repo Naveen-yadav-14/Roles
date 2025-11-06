@@ -396,12 +396,6 @@
                                 <p style="margin-left: 5px; color: green; font-family: 'Lato'">Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/v1/banners">
-                                <i style="margin-left: 5px; color: green" ; class="fas fa-film"></i>
-                                <p style="margin-left: 16px; color: green; font-family: 'Lato'">Banners</p>
-                            </a>
-                        </li>
                          <li class="nav-item">
                             <a class="nav-link" href="/admin/allroles">
                                 <i style="margin-left: 5px; color: green" ; class="fas fa-film"></i>
@@ -414,24 +408,30 @@
                                 <p style="margin-left: 16px; color: green; font-family: 'Lato'">All Permissions</p>
                             </a>
                         </li>
+                        {{#if (includes userPermissions "pharamcy.view")}}
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/allpharmacy">
                                 <i style="margin-left: 5px; color: green" ; class="fas fa-spinner"></i>
                                 <p style="margin-left: 16px; color: green; font-family: 'Lato'">Pharmacy</p>
                             </a>
                         </li>
+                        {{/if}}
+                        {{#if (includes userPermissions "accountent.view")}}
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/allaccountent">
                                 <i style="margin-left: 5px; color: green" ; class="fas fa-spinner"></i>
                                 <p style="margin-left: 16px; color: green; font-family: 'Lato'">Accountent</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{/if}}
+                        {{#if (includes userPermissions "frontdesk.view")}}
+                            <li class="nav-item">
                             <a class="nav-link" href="/admin/allfrontdesk">
                                 <i style="margin-left: 5px; color: green" ; class="fas fa-spinner"></i>
                                 <p style="margin-left: 16px; color: green; font-family: 'Lato'">Front Desk</p>
                             </a>
                         </li>
+                        {{/if}}
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/allusers">
                                 <i style="margin-left: 5px; color: green" ; class="fas fa-spinner"></i>

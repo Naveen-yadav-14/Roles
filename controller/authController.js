@@ -17,12 +17,14 @@ module.exports ={
         try {
           const email = req.body.email;
           const password = req.body.password;
-          console.log(email, password);
           if (!email || !password) {
             req.flash("error", "Invalid fields");
             return res.redirect("/auth/login");
           }
-          const userExists = await user.findOne({ email });
+          const userExists = await user.findOne({ email }).populate({
+        path: "role",
+        populate: { path: "permissions", model: "permissions" }
+      });
           if (!userExists) {
             req.flash("error", "You dont have admin accessss");
             return res.redirect("/auth/login");
@@ -45,7 +47,7 @@ module.exports ={
             }
             return res.redirect("/admin/dashboard");
           });
-        } catch (error) {
+git        } catch (error) {
           console.log(error);
           req.flash("error", "Internal server error");
           return res.redirect("/auth/login");
