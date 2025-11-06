@@ -47,7 +47,7 @@ module.exports ={
             }
             return res.redirect("/admin/dashboard");
           });
-git        } catch (error) {
+        } catch (error) {
           console.log(error);
           req.flash("error", "Internal server error");
           return res.redirect("/auth/login");
@@ -63,7 +63,7 @@ git        } catch (error) {
         }
 
       },
-      logout: async (req, res) => {
+      logOut: async (req, res) => {
         try {
           req.session.destroy();
           return res.redirect("/auth/login");
