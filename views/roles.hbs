@@ -78,9 +78,21 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
-                {{#each  allroles}}
+                {{#each  allRoles}}
                 <tr>
-                    <td class="py-3 px-4">{{this.}}</td>
+                    <td class="py-3 px-4">{{@index}}</td>
+                    <td class="py-3 px-4">{{this.roleName}}</td>
+                    <td class="py-3 px-4">
+      {{#if permissions.length}}
+        <ul class="list-disc pl-4">
+          {{#each permissions}}
+            <li>{{this.name}}</li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <span class="text-gray-400 italic">No permissions assigned</span>
+      {{/if}}
+    </td>
                     </tr>
                 {{/each}}
             </tbody>

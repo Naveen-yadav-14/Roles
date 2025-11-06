@@ -4,11 +4,9 @@ const permissions = require("../models/permissionsModel")
 module.exports = {
     renderingRoles:async (req,res)=>{
         try{
-            const Permissions = await permissions.find()  
-            const allroless = await roles.find().populate({path:"permissions",select:"name"})
-            console.log(allroless,"hh")
+            const allRoles = await roles.find().populate("permissions").lean()
             return res.render("roles",{
-                Permissions
+                allRoles
             })
         }catch(err){
           console.log(err.message)
