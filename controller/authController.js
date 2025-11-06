@@ -17,12 +17,14 @@ module.exports ={
         try {
           const email = req.body.email;
           const password = req.body.password;
-          console.log(email, password);
           if (!email || !password) {
             req.flash("error", "Invalid fields");
             return res.redirect("/auth/login");
           }
-          const userExists = await user.findOne({ email });
+          const userExists = await user.findOne({ email }).populate({
+        path: "role",
+        populate: { path: "permissions", model: "permissions" }
+      });
           if (!userExists) {
             req.flash("error", "You dont have admin accessss");
             return res.redirect("/auth/login");
@@ -39,13 +41,17 @@ module.exports ={
             req.flash("error", "Password is wrong");
             return res.redirect("/auth/login");
           }
-          
-          req.session.save((err) => {
-            if (err) {
-              return next(err);
-            }
-            return res.redirect("/admin/dashboard");
-          });
+           req.session.superAdmin = userExists._id;
+
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        req.flash("error", "Failed to create session");
+        return res.redirect("/auth/login");
+      }
+      // console.log("Session created:", req.session);
+      return res.redirect("/admin/dashboard");
+    });
         } catch (error) {
           console.log(error);
           req.flash("error", "Internal server error");

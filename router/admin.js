@@ -15,6 +15,7 @@ adminRoute.post("/assignrole/:id",adminController.assignRole)
 
 adminRoute.get("/allroles",roleController.renderingRoles)
 adminRoute.get("/allPermissions", permissionsController.allPermissions)
+adminRoute.get("/deletepermission/:id", permissionsController.deletePermission)
 adminRoute.get("/allusers", userController.allUsers);
 adminRoute.post("/addpermission", permissionsController.addPermission);
 adminRoute.get("/allpharmacy", userController.allPharmacy);

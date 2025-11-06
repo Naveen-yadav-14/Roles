@@ -5,8 +5,10 @@ module.exports = {
     renderingRoles:async (req,res)=>{
         try{
             const allRoles = await roles.find().populate("permissions").lean()
+            const allPermissions = await permissions.find();
             return res.render("roles",{
-                allRoles
+                allRoles,
+                allPermissions
             })
         }catch(err){
           console.log(err.message)
@@ -15,9 +17,7 @@ module.exports = {
     },
     addRole: async (req,res) => {
         try {
-          console.log(req.body);
           const { roleName, permissionName } = req.body;
-          console.log(permissionName)
           const permissionsArray = Array.isArray(permissionName)
           ? permissionName
           : [permissionName];

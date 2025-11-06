@@ -125,7 +125,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                <a href="/superadmin/deletepermission/{{this._id}}" type="button" class="btn btn-danger"> yes </a>
+                <a href="/admin/deletepermission/{{this._id}}" type="button" class="btn btn-danger"> yes </a>
             </div>
         </div>
     </div>
@@ -209,7 +209,7 @@
             var button = $(event.relatedTarget);
             var projectId = button.data('id');
             var modal = $(this);
-            modal.find('a.btn-danger').attr('href', '/superadmin/deletepermission/' + projectId);
+            modal.find('a.btn-danger').attr('href', '/admin/deletepermission/' + projectId);
         });
     });
 </script>
