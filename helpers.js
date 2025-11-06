@@ -4,6 +4,8 @@ function registerHelpers(){
         return Array.isArray(array) && array.includes(value);
     });
     hbs.registerHelper("inc", (value) => parseInt(value) + 1);
-
+    hbs.registerHelper("ifEquals", function (a, b, options) {
+  return a.toString() === b.toString() ? options.fn(this) : options.inverse(this);
+});
 }
 module.exports = registerHelpers;

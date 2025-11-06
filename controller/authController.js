@@ -41,12 +41,16 @@ module.exports ={
             req.flash("error", "Password is wrong");
             return res.redirect("/auth/login");
           }
-          req.session.save((err) => {
-            if (err) {
-              return next(err);
-            }
-            return res.redirect("/admin/dashboard");
-          });
+          req.session.superAdmin = userExists._id;
+
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        req.flash("error", "Failed to create session");
+        return res.redirect("/auth/login");
+      }
+      return res.redirect("/admin/dashboard");
+    });
         } catch (error) {
           console.log(error);
           req.flash("error", "Internal server error");

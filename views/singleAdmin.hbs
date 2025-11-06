@@ -47,7 +47,8 @@
                                                         <label>subscription Access</label>
                                                         <select name="status" class="form-control">
                                                             {{#each Roles}}
-                                                            <option value="{{this._id}}" >
+                                                            <option value="{{this._id}}"
+                                                             {{#ifEquals this._id ../adminExists.role._id}}selected{{/ifEquals}}>
                                                                 {{this.roleName}}</option>
                                                                 {{/each}}
                                                         </select>
