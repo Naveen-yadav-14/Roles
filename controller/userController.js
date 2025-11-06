@@ -3,6 +3,7 @@ const frontDesk = require("../models/frontDeskModel");
 const pharmacy = require("../models/pharmacyModel");
 const user = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const roles = require("../models/rolesModel")
 
 module.exports = {
    create: async(req, res) => {
@@ -18,7 +19,7 @@ module.exports = {
    },
    allUsers: async (req, res) => {
            try {
-               const allUsers = await user.find().sort({ createdAt: -1 });
+               const allUsers = await user.find().sort({ createdAt: -1 })
                return res.render("allAdmins", {
                    allAdmins:allUsers,
                    success: req.flash("success"),

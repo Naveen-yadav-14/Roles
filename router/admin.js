@@ -10,7 +10,8 @@ const adminController = require("../controller/adminController")
 
 adminRoute.get("/dashboard",authController.dashboard)
 adminRoute.post("/addadmin", adminController.addAdmin)
-adminRoute.get("/singleadmin", adminController.singleAdmin);
+adminRoute.get("/singleadmin/:id", adminController.singleAdmin);
+adminRoute.post("/assignrole/:id",adminController.assignRole)
 
 adminRoute.get("/allroles",roleController.renderingRoles)
 adminRoute.get("/allPermissions", permissionsController.allPermissions)
