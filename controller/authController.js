@@ -39,7 +39,6 @@ module.exports ={
             req.flash("error", "Password is wrong");
             return res.redirect("/auth/login");
           }
-          
           req.session.save((err) => {
             if (err) {
               return next(err);
@@ -52,7 +51,6 @@ module.exports ={
           return res.redirect("/auth/login");
         }
       },
-
       dashboard : async (req,res)=>{
         try{
             return res.render("dashboard")
@@ -62,5 +60,14 @@ module.exports ={
             return res.redirect("/auth/login")
         }
 
-      }
+      },
+      logout: async (req, res) => {
+        try {
+          req.session.destroy();
+          return res.redirect("/auth/login");
+        } catch (error) {
+          req.flash("error", "Internal server error");
+          return res.redirect("/auth/login");
+        }
+      },
 }
